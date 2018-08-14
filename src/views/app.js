@@ -19,13 +19,14 @@ var AppView = Backbone.View.extend({
       el: $(".player"),
     }).render();
 
-    // new VideoListView ({
-    //   el: $(".list"),
-    // }).render();
-
-    new VideoListEntryView ({
+    new VideoListView ({
       el: $(".list"),
+      collection: this.videos
     }).render();
+
+    // new VideoListEntryView ({
+    //   el: $(".list")
+    // }).render();
     
     new SearchView ({
       el: $('.search'),
