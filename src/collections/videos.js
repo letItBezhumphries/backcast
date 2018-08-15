@@ -1,19 +1,17 @@
 var Videos = Backbone.Collection.extend({
+  
   model: Video,
 
-  initialize: function(){
-
+  initialize: function() {
+    
   },
 
   fetch: function(query) {
     $.ajax({
-      // cache: false,
+      cache: false,
       data: {
         part: 'snippet', 
-        // order: viewCount,
         q: query, 
-        // type: 'video',
-        // videoDefinition: high,
         key: YOUTUBE_API_KEY,
         maxResults: 5,
       },
@@ -23,6 +21,12 @@ var Videos = Backbone.Collection.extend({
       url: 'https://www.googleapis.com/youtube/v3/search',
       success: function(data) {
         console.log('data fetched', data);
+
+        const collection = new Videos(data.items);
+
+        collection.forEach(fetchedVideo => {
+          $('.video-list').append(new VideoListEntryView({model: fetchedVideo}).render().el);
+        });
       },
       error: function(data) {
         console.error('failed to fetch data', data);
